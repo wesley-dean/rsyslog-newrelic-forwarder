@@ -1,14 +1,30 @@
 #!/bin/sh
 
-DATA_FILENAME="${DATA_FILENAME:-/etc/rsyslog.data.yml}"
+TEMPLATE_DIRECTORY="${TEMPLATE_DIRECTORY:-templates/}"
+TEMPLATE_PATTERN="${TEMPLATE_PATTERN:-*.tpl.*}"
+PREFIX="${PREFIX:-./dist/}"
 
-python3 /bin/environment_to_yaml.py > "${DATA_FILENAME}"
+remove_secondary_extension() {
+  filename="${1?Error: no filename passed}"
+  extension="${filename##*.}"
+  filename_without_extension="${filename%.*}"
+  filename_without_secondary="${filename_without_extension%.*}"
+  output_filename="${filename_without_secondary}.${extension}"
+  printf "%s" "${output_filename}"
+}
 
-for template_filename in /etc/rsyslog.d/*.j2.conf ; do
-  extension="${template_filename##*.}"
-  template_filename_without_extension="${template_filename%%.*}"
-  template_filename_without_j2="${template_filename_without_extension%%.*}"
-  output_filename="${template_filename_without_j2}.${extension}"
+for template_filename in "${TEMPLATE_DIRECTORY}"$TEMPLATE_PATTERN ; do
+  output_filename="${PREFIX}$(remove_secondary_extension "$template_filename")"
+  output_directory="$(dirname "$output_filename")"
 
-  j2-cli "${template_filename}" < "$DATA_FILENAME" > "$output_filename"
+  if [ ! -d "$output_directory" ] ; then
+    mkdir -p "$output_directory"
+  fi
+
+  echo "processing '$template_filename' => '$output_filename'"
+
+  envsubst < "$template_filename" > "$output_filename"
+  
 done
+
+rsyslogd -n
