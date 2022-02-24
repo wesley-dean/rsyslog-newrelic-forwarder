@@ -1,8 +1,8 @@
 # load modules
-module(load="omfwd")
+# module(load="builtin:omfwd")
 module(load="imudp")
 module(load="imtcp")
-module(load="imfile" PollingInterval="10")
+# module(load="imfile" PollingInterval="10")
 
 # template expected by the New Relic Syslog endpoint
 template(
@@ -11,13 +11,13 @@ template(
   string="${NEWRELIC_ACCOUNT_ID} ${NEWRELIC_TEMPLATE}\n"
 )
 
-# monitor local logs
-input(
-  type="imfile"
-  File="${RSYSLOG_LOG_FILE}"
-  Tag="syslog"
-  ruleset="newrelic"
-)
+## monitor local logs
+#input(
+#  type="imfile"
+#  File="${RSYSLOG_LOG_FILE}"
+#  Tag="syslog"
+#  ruleset="newrelic"
+#)
 
 # accept remote TCP logs
 input(
@@ -36,7 +36,7 @@ input(
 # configure TLS
 global(
   DefaultNetstreamDriver="gtls"
-  DefaultNetstreamDriverCAFile="{$SSL_CERT}"
+  DefaultNetstreamDriverCAFile="${SSL_CERT}"
 )
 
 # forward logs to New Relic

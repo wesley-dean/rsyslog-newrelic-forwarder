@@ -1,8 +1,8 @@
 #!/bin/sh
 
-TEMPLATE_DIRECTORY="${TEMPLATE_DIRECTORY:-templates/}"
-TEMPLATE_PATTERN="${TEMPLATE_PATTERN:-*.tpl.*}"
-PREFIX="${PREFIX:-./dist/}"
+TEMPLATE_DIRECTORY="${TEMPLATE_DIRECTORY:-/etc/rsyslog.d/}"
+TEMPLATE_PATTERN="${TEMPLATE_PATTERN:-*.tpl}"
+#PREFIX="${PREFIX:-/etc/rsyslog.d/}"
 
 remove_secondary_extension() {
   filename="${1?Error: no filename passed}"
@@ -13,8 +13,8 @@ remove_secondary_extension() {
   printf "%s" "${output_filename}"
 }
 
-for template_filename in "${TEMPLATE_DIRECTORY}"$TEMPLATE_PATTERN ; do
-  output_filename="${PREFIX}$(remove_secondary_extension "$template_filename")"
+for template_filename in "${TEMPLATE_DIRECTORY}"${TEMPLATE_PATTERN} ; do
+  output_filename="${template_filename%.*}"
   output_directory="$(dirname "$output_filename")"
 
   if [ ! -d "$output_directory" ] ; then
@@ -27,4 +27,4 @@ for template_filename in "${TEMPLATE_DIRECTORY}"$TEMPLATE_PATTERN ; do
   
 done
 
-rsyslogd -n
+rsyslogd "$@"
