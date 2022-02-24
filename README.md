@@ -1,5 +1,9 @@
 # rsyslog-newrelic-forwarder
 
+[![Semgrep](https://github.com/wesley-dean/rsyslog-newrelic-forwarder/actions/workflows/semgrep.yml/badge.svg)](https://github.com/wesley-dean/rsyslog-newrelic-forwarder/actions/workflows/semgrep.yml) 
+[![build_docker_image](https://github.com/wesley-dean/rsyslog-newrelic-forwarder/actions/workflows/build_docker_image.yml/badge.svg)](https://github.com/wesley-dean/rsyslog-newrelic-forwarder/actions/workflows/build_docker_image.yml)
+[![MegaLinter](https://github.com/wesley-dean/rsyslog-newrelic-forwarder/actions/workflows/megalinter.yml/badge.svg)](https://github.com/wesley-dean/rsyslog-newrelic-forwarder/actions/workflows/megalinter.yml)
+
 Containerized rsyslog forwarder to push logs to New Relic
 
 ## Purpose
