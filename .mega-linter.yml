@@ -36,10 +36,6 @@ JAVASCRIPT_ES_FILE_EXTENSIONS: ["*.js"]
 JAVASCRIPT_DEFAULT_STYLE: 'prettier'
 
 PRE_COMMANDS:
-  - continue_if_failed: false
-    command: npm install
-    cwd: workspace
-
   - continue_if_failed: true
     command: if [ -d report ] ; then rm -rf report ; fi
     cwd: workspace
