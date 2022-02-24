@@ -10,6 +10,8 @@ ENV RSYSLOG_PORT="514"
 ENV RSYSLOG_LOG_FILE="/var/log/syslog"
 ENV SSL_CERT="/etc/ssl/certs/ca-certificates.crt"
 
+LABEL org.opencontainers.image.source https://github.com/wesley-dean/rsyslog-newrelic-forwarder
+
 RUN apk update \
   && apk add --no-cache \
     gettext==0.20.2-r2 \
