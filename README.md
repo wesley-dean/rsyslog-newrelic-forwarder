@@ -48,13 +48,12 @@ The container may be run with the following command:
 NEWRELIC_LISTEN_PORT=514 \
 NEWRELIC_ACCOUNT_ID=0123456789abcdefNRAL \
 docker run \
-  --rm \
   --detach \
   --env NEWRELIC_ACCOUNT_ID=${NEWRELIC_ACCOUNT_ID?No account id provided} \
   --name rsyslog \
   --expose 0.0.0.0:${NEWRELIC_LISTEN_PORT:-514}:514/tcp \
   --expose 0.0.0.0:${NEWRELIC_LISTEN_PORT:-514}:514/udp \
-  --privileged \
+  --restart unless-stopped \
   rsyslog
 ```
 
