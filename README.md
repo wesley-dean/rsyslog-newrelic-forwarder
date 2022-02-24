@@ -9,7 +9,7 @@ from over the network, and forward them to New Relic.  While the
 logs may be spooled locally, they'll only be written to disk when
 the forwarder can't keep up.
 
-The image is intended to be very small (13.1MB at the time of
+The image is intended to be very small (18.3MB at the time of
 writing) and minimize writes to the filesystem; as a result, it
 ought to be suitable for running on an embedded device, a
 Raspberry Pi, etc..

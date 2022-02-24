@@ -1,28 +1,24 @@
 #!/bin/sh
 
-TEMPLATE_DIRECTORY="${TEMPLATE_DIRECTORY:-/etc/rsyslog.d/}"
-TEMPLATE_PATTERN="${TEMPLATE_PATTERN:-*.tpl}"
-#PREFIX="${PREFIX:-/etc/rsyslog.d/}"
+TEMPLATE_DIRECTORY="$(realpath "${TEMPLATE_DIRECTORY:-templates}")/"
+TEMPLATE_PATTERN="${TEMPLATE_PATTERN:-*}"
+PREFIX="${PREFIX:-/}"
 
-remove_secondary_extension() {
-  filename="${1?Error: no filename passed}"
-  extension="${filename##*.}"
-  filename_without_extension="${filename%.*}"
-  filename_without_secondary="${filename_without_extension%.*}"
-  output_filename="${filename_without_secondary}.${extension}"
-  printf "%s" "${output_filename}"
-}
+find "${TEMPLATE_DIRECTORY}" \
+  -name "$TEMPLATE_PATTERN" \
+  -type f \
+  -print \
+  | while read -r template_filename ; do
 
-for template_filename in "${TEMPLATE_DIRECTORY}"${TEMPLATE_PATTERN} ; do
-  output_filename="${template_filename%.*}"
+  output_filename="${PREFIX}${template_filename#$TEMPLATE_DIRECTORY}"
+
   output_directory="$(dirname "$output_filename")"
 
   if [ ! -d "$output_directory" ] ; then
     mkdir -p "$output_directory"
   fi
 
-  echo "processing '$template_filename' => '$output_filename'"
-
+  echo "processing '$template_filename' => '$output_filename'" 1>&2
   envsubst < "$template_filename" > "$output_filename"
   
 done

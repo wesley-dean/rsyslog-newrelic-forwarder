@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.13.2
 
 ENV NEWRELIC_ACCOUNT_ID="your_New_Relic_account_id_goes_here"
 ENV NEWRELIC_TEMPLATE="<%pri%>%protocol-version% %timestamp:::date-rfc3339% %hostname% %app-name% %procid% %msgid% %structured-data% %msg%"
@@ -11,12 +11,19 @@ ENV RSYSLOG_LOG_FILE="/var/log/syslog"
 ENV SSL_CERT="/etc/ssl/certs/ca-certificates.crt"
 
 RUN apk update \
-  && apk add gettext openssl rsyslog rsyslog-tls ca-certificates \
-  && mkdir -p /etc/rsyslog.d/
+  && apk add --no-cache \
+    gettext==0.20.2-r2 \
+    openssl==1.1.1l-r0 \
+    rsyslog==8.2012.0-r2 \
+    rsyslog-tls==8.2012.0-r2 \
+    ca-certificates==20211220-r0 \
+  && mkdir -p /etc/rsyslog.d/ /usr/src/app/ \
+  && rm -rf /var/cache/apk/
 
-COPY templates/*.tpl /etc/rsyslog.d/
-COPY entrypoint.sh /
-RUN chmod 755 /entrypoint.sh
+WORKDIR /usr/src/app/
 
-ENTRYPOINT ["/entrypoint.sh"]
+COPY . /usr/src/app/
+RUN chmod 755 /usr/src/app/entrypoint.sh
+
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
 CMD ["-n"]
