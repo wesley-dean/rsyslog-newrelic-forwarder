@@ -29,12 +29,35 @@ This variable must have the New Relic account ID so that logs
 are correlated with the correct account on the New Relic log
 ingestion service.
 
-### RSYSLOG\_PORT
+## Building the Image
 
-The `RSYSLOG_PORT` environment variable is used to specify the
-port that rsyslog should bind to and accept connections on.  By
-default, `RSYSLOG_PORT` is set to '`514`', the default port for
-rsyslog.  Note: rsyslog is configured to listen on this port for
-both TCP and UDP connections.  To change this, either update the
-templates (not recommended) or only publish the desired ports
-when running `docker run`.
+The image may be built with the following command:
+
+```sh
+docker build -t rsyslog -f Dockerfile .
+```
+
+This will build the image starting with an Alpine base.  The
+image will be tagged as '`rsyslog`'.
+
+## Running the Forwarder Container
+
+The container may be run with the following command:
+
+```sh
+NEWRELIC_LISTEN_PORT=514 \
+NEWRELIC_ACCOUNT_ID=0123456789abcdefNRAL \
+docker run \
+  --rm \
+  --detach \
+  --env NEWRELIC_ACCOUNT_ID=${NEWRELIC_ACCOUNT_ID?No account id provided} \
+  --name rsyslog \
+  --expose 0.0.0.0:${NEWRELIC_LISTEN_PORT:-514}:514/tcp \
+  --expose 0.0.0.0:${NEWRELIC_LISTEN_PORT:-514}:514/udp \
+  --privileged \
+  rsyslog
+```
+
+Note: you must replace '`0123456789abcdefNRAL`' with your actual
+New Relic account ID.  If a port other than the default (514) is
+required, it may be set using the `NEWRELIC_LISTEN_PORT` variable.
