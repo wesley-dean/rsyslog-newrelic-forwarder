@@ -58,7 +58,7 @@ docker run \
   --expose 0.0.0.0:${NEWRELIC_LISTEN_PORT:-514}:514/tcp \
   --expose 0.0.0.0:${NEWRELIC_LISTEN_PORT:-514}:514/udp \
   --restart unless-stopped \
-  rsyslog
+  wesleydean/rsyslog-newrelic-forwarder:latest
 ```
 
 Note: you must replace '`0123456789abcdefNRAL`' with your actual
