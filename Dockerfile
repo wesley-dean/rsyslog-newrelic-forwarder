@@ -14,10 +14,10 @@ LABEL org.opencontainers.image.source https://github.com/wesley-dean/rsyslog-new
 
 RUN apk update \
   && apk add --no-cache \
-    gettext==0.20.2-r2 \
-    openssl==1.1.1l-r0 \
-    rsyslog==8.2012.0-r2 \
-    rsyslog-tls==8.2012.0-r2 \
+    gettext==0.21-r0 \
+    openssl==1.1.1l-r8 \
+    rsyslog==8.2108.0-r1 \
+    rsyslog-tls==8.2108.0-r1 \
     ca-certificates==20211220-r0 \
   && mkdir -p /etc/rsyslog.d/ /usr/src/app/ \
   && rm -rf /var/cache/apk/
