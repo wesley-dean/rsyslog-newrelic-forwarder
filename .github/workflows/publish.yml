@@ -1,6 +1,6 @@
 ---
 
-name: build_docker_image
+name: Publish
 
 # yamllint disable-line rule:truthy
 on:
