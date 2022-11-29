@@ -1,4 +1,4 @@
-FROM alpine:3.15.3
+FROM alpine:3.17.0
 
 ENV NEWRELIC_ACCOUNT_ID="your_New_Relic_account_id_goes_here"
 ENV NEWRELIC_TEMPLATE="<%pri%>%protocol-version% %timestamp:::date-rfc3339% %hostname% %app-name% %procid% %msgid% %structured-data% %msg%"
@@ -14,11 +14,11 @@ LABEL org.opencontainers.image.source https://github.com/wesley-dean/rsyslog-new
 
 RUN apk update \
   && apk add --no-cache \
-    gettext==0.21-r0 \
-    openssl==1.1.1n-r0 \
-    rsyslog==8.2108.0-r1 \
-    rsyslog-tls==8.2108.0-r1 \
-    ca-certificates==20211220-r0 \
+    gettext==0.21.1-r1 \
+    openssl==3.0.7-r0 \
+    rsyslog==8.2210.0-r0 \
+    rsyslog-tls==8.2210.0-r0 \
+    ca-certificates==20220614-r2 \
   && mkdir -p /etc/rsyslog.d/ /usr/src/app/ \
   && rm -rf /var/cache/apk/
 
