@@ -1,4 +1,4 @@
-FROM alpine:3.17.0
+FROM alpine:3.19.1
 
 ENV NEWRELIC_ACCOUNT_ID="your_New_Relic_account_id_goes_here"
 ENV NEWRELIC_TEMPLATE="<%pri%>%protocol-version% %timestamp:::date-rfc3339% %hostname% %app-name% %procid% %msgid% %structured-data% %msg%"
@@ -18,7 +18,7 @@ RUN apk update \
     openssl=~3 \
     rsyslog=~8 \
     rsyslog-tls=~8 \
-    ca-certificates=~20220614-r2 \
+    ca-certificates=~20240226 \
   && mkdir -p /etc/rsyslog.d/ /usr/src/app/ \
   && rm -rf /var/cache/apk/
 
