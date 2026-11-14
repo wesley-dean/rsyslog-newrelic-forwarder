@@ -14,7 +14,7 @@ LABEL org.opencontainers.image.source https://github.com/wesley-dean/rsyslog-new
 
 RUN apk update \
   && apk add --no-cache \
-    gettext=~0 \
+    gettext=~1 \
     openssl=~3 \
     rsyslog=~8 \
     rsyslog-tls=~8 \
