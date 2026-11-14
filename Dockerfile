@@ -18,7 +18,7 @@ RUN apk update \
     openssl=~3 \
     rsyslog=~8 \
     rsyslog-tls=~8 \
-    ca-certificates=~20240226 \
+    ca-certificates=~20261020-r0 \
   && mkdir -p /etc/rsyslog.d/ /usr/src/app/ \
   && rm -rf /var/cache/apk/
 
